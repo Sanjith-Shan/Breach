@@ -1,0 +1,2 @@
+# Host-side harness dependencies. Pinned for reproducibility.
+PyYAML==6.0.2

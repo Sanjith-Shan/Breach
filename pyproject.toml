@@ -1,0 +1,14 @@
+[project]
+name = "breach"
+version = "0.1.0"
+description = "A prompt-injection susceptibility harness for coding agents, measured across carrier surfaces with a matched control and a defense arm."
+requires-python = ">=3.10"
+dependencies = [
+    "pyyaml",
+]
+
+[tool.setuptools.packages.find]
+include = ["breach*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
