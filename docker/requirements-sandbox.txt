@@ -1,0 +1,6 @@
+# Dependencies installed INSIDE the Breach sandbox image (breach-sandbox:0.1.0).
+# Deliberately minimal: this image runs task pytest suites and the stdlib-only
+# egress proxy. pyyaml is included because task fixtures/config in this repo
+# are YAML.
+pytest==8.3.4
+pyyaml==6.0.2
