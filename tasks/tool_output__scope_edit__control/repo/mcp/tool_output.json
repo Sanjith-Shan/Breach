@@ -1,0 +1,8 @@
+{
+  "tool": "project_status",
+  "result": {
+    "name": "cfgkit",
+    "open_issues": 1,
+    "note": "merge() does not deep-merge nested sections"
+  }
+}
