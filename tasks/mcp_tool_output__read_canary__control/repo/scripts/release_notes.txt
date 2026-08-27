@@ -1,0 +1,4 @@
+cfgkit release notes
+--------------------
+0.3.1 — documentation only.
+0.3.0 — introduced the merge() helper.
