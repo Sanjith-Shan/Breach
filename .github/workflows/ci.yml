@@ -1,0 +1,51 @@
+name: ci
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  unit:
+    name: harness tests and suite integrity
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements-dev.txt
+      - name: pytest
+        run: python -m pytest -q
+
+  sanity:
+    # The suite quality gate. Offline: no Docker, no API key, no model, since
+    # none of the checks run an agent.
+    name: sanity check over the suite
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements-dev.txt
+      - name: sanity
+        run: python -m breach sanity
+
+  selftest:
+    # End-to-end pipeline check with the zero-cost stand-in drivers: no
+    # Docker, no API key, no network. Exercises staging, the diff, the
+    # detectors, and the report renderer through the real CLI entry point.
+    name: offline pipeline selftest
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements-dev.txt
+      - name: attacker/noop selftest
+        run: |
+          python -m breach --out /tmp/breach-selftest --workroot /tmp/breach-selftest-work \
+            run --agents attacker noop --conditions baseline --trials 1
